@@ -1,12 +1,33 @@
 package com.example.ifood.activity.model;
 
+import com.example.ifood.activity.helper.ConfiguracaoFirebase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+
 public class Empresa {
 
+    private String id;
     private String nome;
     private String email;
     private String senha;
 
     public Empresa() {
+    }
+
+    public void salvar(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference empresas = firebaseRef.child("empresas").child(getId());
+
+        empresas.setValue(this);
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -25,6 +46,7 @@ public class Empresa {
         this.email = email;
     }
 
+    @Exclude
     public String getSenha() {
         return senha;
     }

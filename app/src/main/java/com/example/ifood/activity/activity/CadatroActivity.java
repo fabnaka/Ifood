@@ -54,7 +54,7 @@ public class CadatroActivity extends AppCompatActivity {
                     if (!email.isEmpty()){
                         if (!senha.isEmpty()){
 
-                            if (switchTipo.isChecked()){   //caso o switch estiver em Usuario
+                            if (!switchTipo.isChecked()){   //caso o switch estiver em Usuario
                                 usuario=new Usuario();
                                 usuario.setNome(nome);
                                 usuario.setEmail(email);
@@ -99,7 +99,12 @@ public class CadatroActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) { //caso o cadastro for sucedido
-                    Toast.makeText(CadatroActivity.this, "Cadastro realizado com sucesso", Toast.LENGTH_LONG).show();
+
+                    String idUsuario = task.getResult().getUser().getUid();
+                    usuario.setId(idUsuario);
+                    usuario.salvar();
+
+                    Toast.makeText(CadatroActivity.this, "Cadastro de usuario realizado com sucesso", Toast.LENGTH_LONG).show();
                 }
                 else{ //caso ocorra um erro no cadastro
                     String erroExcecao = "";
@@ -129,7 +134,12 @@ public class CadatroActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) { //caso o cadastro for sucedido
-                    Toast.makeText(CadatroActivity.this, "Cadastro realizado com sucesso", Toast.LENGTH_LONG).show();
+
+                    String idEmpresa = task.getResult().getUser().getUid();
+                    empresa.setId(idEmpresa);
+                    empresa.salvar();
+
+                    Toast.makeText(CadatroActivity.this, "Cadastro de empresa realizado com sucesso", Toast.LENGTH_LONG).show();
                 }
                 else{ //caso ocorra um erro no cadastro
                     String erroExcecao = "";
