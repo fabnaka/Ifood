@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.ifood.R;
 import com.example.ifood.activity.helper.ConfiguracaoFirebase;
+import com.example.ifood.activity.helper.UsuarioFirebase;
+import com.example.ifood.activity.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -64,11 +66,13 @@ public class AutenticacaoActivity extends AppCompatActivity {
                         autenticacao.signInWithEmailAndPassword(email,senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-                                    //no caso de login com sucesso
+                                if (task.isSuccessful()){//no caso de login com sucesso
+
                                     Toast.makeText(AutenticacaoActivity.this, "Login efetuado com sucesso", Toast.LENGTH_SHORT).show();
 
-                                    irTelaPrincipal();
+                                    //Verifica o tipo do cadastro
+                                    UsuarioFirebase.redirecionaTipoCadastroLogado(AutenticacaoActivity.this);
+
 
                                 } else {
                                     //no caso de login sem sucesso
@@ -93,14 +97,11 @@ public class AutenticacaoActivity extends AppCompatActivity {
         FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
 
         if (usuarioAtual!=null){
-            irTelaPrincipal();
+            UsuarioFirebase.redirecionaTipoCadastroLogado(AutenticacaoActivity.this);
         }
 
     }
 
-    private void irTelaPrincipal(){
-        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-    }
 
     private void inicializaComponentes(){
         campoEmail=findViewById(R.id.editTextEmail);

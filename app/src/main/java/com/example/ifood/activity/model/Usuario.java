@@ -7,11 +7,13 @@ import com.google.firebase.database.Exclude;
 public class Usuario {
 
     private String id;
+    private String tipo;
     private String nome;
     private String email;
     private String senha;
 
     public Usuario() {
+
     }
 
     public void salvar(){
@@ -28,6 +30,14 @@ public class Usuario {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getNome() {
